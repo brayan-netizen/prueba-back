@@ -30,7 +30,7 @@ const productsQuery = {
 			total,
 			totalPages,
 			hasNextPage,
-			products: response.data.map((product) => ({
+			items: response.data.map((product) => ({
 				productId: product.productId,
 				productName: product.productName,
 				brand: product.brand,
