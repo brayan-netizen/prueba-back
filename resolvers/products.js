@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 
-const products = async (_, { from: OFrom, to: Oto }) => {
+const products = async (_, { from: OFrom = 1, to: Oto = 10 }) => {
 	const from = OFrom === 0 ? OFrom : OFrom - 1;
 	const to = OFrom === 0 ? Oto : Oto - 1;
 

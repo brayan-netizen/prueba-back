@@ -1,3 +1,25 @@
+type SubItemImg {
+	imageId: String
+	imageLabel: String
+	imageUrl: String
+	imageText: String
+	imageLastModified: String
+}
+
+type SubItems {
+	itemId: String
+	name: String
+	nameComplete: String
+	complementName: String
+	ean: String
+	measurementUnit: String
+	unitMultiplier: Int
+	isKit: Boolean
+	images: [SubItemImg]
+	Talla: [String]
+	variations: [String]
+}
+
 type Product {
 	productId: ID
 	productName: String
@@ -13,6 +35,15 @@ type Product {
 	releaseDate: String
 	link: String
 	description: String
+	categories: [String]
+	categoriesIds: [String]
+	Color: [String]
+	Silueta: [String]
+	linea: [String]
+	cuidados: [String]
+	origen: [String]
+	tipoPrenda: [String]
+	items: [SubItems]
 }
 
 type PaginationInfo {
@@ -29,6 +60,7 @@ type PaginatedProducts {
 }
 
 type Query {
+	product(productId: String!): Product
 	products(from: Int!, to: Int!): PaginatedProducts
 }
 
