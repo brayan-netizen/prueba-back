@@ -13,7 +13,7 @@ const PaginatedProductsType = new GraphQLObjectType({
 		total: { type: GraphQLInt },
 		totalPages: { type: GraphQLInt },
 		hasNextPage: { type: GraphQLBoolean },
-		products: { type: new GraphQLList(ProductType) }
+		items: { type: new GraphQLList(ProductType) }
 	})
 });
 
