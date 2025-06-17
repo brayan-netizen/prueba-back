@@ -1,0 +1,38 @@
+type Product {
+	productId: ID
+	productName: String
+	brand: String
+	brandId: Int
+	brandImageUrl: String
+	linkText: String
+	productReference: String
+	productReferenceCode: String
+	categoryId: String
+	productTitle: String
+	metaTagDescription: String
+	releaseDate: String
+	link: String
+	description: String
+}
+
+type PaginationInfo {
+	tableLength: Int
+	itemsLength: Int
+	currentItemFrom: Int
+	currentItemTo: Int
+	currentPage: Int
+}
+
+type PaginatedProducts {
+	items: [Product]
+	pagination: PaginationInfo
+}
+
+type Query {
+	products(from: Int!, to: Int!): PaginatedProducts
+}
+
+type Mutation {
+	register(email: String!, password: String!): String
+	login(email: String!, password: String!): String
+}
