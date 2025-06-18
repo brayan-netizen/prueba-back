@@ -59,12 +59,60 @@ type PaginatedProducts {
 	pagination: PaginationInfo
 }
 
+type User {
+	id: ID!
+	name: String
+	lastName: String
+	username: String
+	email: String!
+	createDate: String
+	roles: [Role]
+}
+
+type Role {
+	id: ID!
+	name: String!
+	permissions: [String!]!
+}
+
+type AuthPayload {
+	token: String
+	user: User
+}
+
 type Query {
+	users: [User]
+	user(id: ID!): User
+	roles: [Role]
+	role(id: ID!): Role
 	product(productId: String!): Product
 	products(from: Int!, to: Int!, search: String): PaginatedProducts
 }
 
 type Mutation {
-	register(email: String!, password: String!): String
-	login(email: String!, password: String!): String
+	registerUser(
+		name: String
+		lastName: String
+		username: String
+		email: String!
+		password: String!
+		roleIds: [ID!]!
+	): String
+
+	updateUser(
+		id: ID!
+		name: String!
+		lastName: String!
+		email: String
+		password: String
+		roleIds: [ID]
+	): User
+
+	deleteUser(id: ID!): Boolean
+
+	createRole(name: String!, permissions: [String!]!): Role
+	updateRole(id: ID!, name: String, permissions: [String!]): Role
+	deleteRole(id: ID!): Boolean
+
+	login(email: String!, password: String!): AuthPayload
 }

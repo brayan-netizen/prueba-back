@@ -3,15 +3,16 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const { graphqlHTTP } = require('express-graphql');
 const { readFileSync } = require('fs');
+const { graphqlHTTP } = require('express-graphql');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 
-const resolvers = require('./resolvers');
+const User = require('./models/User');
+const resolvers = require('./graphql/resolvers');
 
 const app = express();
 
-const typeDefs = readFileSync('./schema.graphql', 'utf8');
+const typeDefs = readFileSync('./graphql/schema.graphql', 'utf8');
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 mongoose
@@ -24,16 +25,33 @@ mongoose
 
 app.use(
 	cors({
-		origin: '*', // o '*' para todos los orígenes
+		origin: '*',
 		credentials: true
 	})
 );
 
 app.use(
 	'/graphql',
-	graphqlHTTP({
-		schema,
-		graphiql: true
+	graphqlHTTP(async (req) => {
+		let user = null;
+
+		const authHeader = req.headers.authorization;
+		if (authHeader) {
+			const token = authHeader.split(' ')[1];
+
+			try {
+				const decoded = jwt.verify(token, process.env.JWT_SECRET);
+				user = await User.findById(decoded.userId).populate('roles');
+			} catch (error) {
+				console.log('Invalid token:', error.message);
+			}
+		}
+
+		return {
+			schema,
+			graphiql: true,
+			context: { user }
+		};
 	})
 );
 
