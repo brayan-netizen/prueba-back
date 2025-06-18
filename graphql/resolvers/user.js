@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../../models/User');
 const permission = require('../../utils/permission');
+const checkPermission = require('../../utils/checkPermission');
 
 const generateUsername = async (name, lastName) => {
 	const base = `${name}${lastName}`.toLowerCase().replace(/\s/g, '');
