@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const cors = require('cors');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const { readFileSync } = require('fs');
 const { graphqlHTTP } = require('express-graphql');
@@ -37,7 +38,7 @@ app.use(
 
 		const authHeader = req.headers.authorization;
 		if (authHeader) {
-			const token = authHeader.split(' ')[1];
+			const token = authHeader.replace('Bearer ', '');
 
 			try {
 				const decoded = jwt.verify(token, process.env.JWT_SECRET);

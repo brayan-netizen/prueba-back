@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 const User = require('../../models/User');
+const Role = require('../../models/Role');
 const permission = require('../../utils/permission');
 const checkPermission = require('../../utils/checkPermission');
 

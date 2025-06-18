@@ -8,6 +8,7 @@ module.exports.getUserFromToken = async (token) => {
 		const user = await User.findById(decoded.userId).populate('roles');
 		return user;
 	} catch (err) {
+		console.log(err);
 		return null;
 	}
 };
