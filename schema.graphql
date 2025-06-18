@@ -61,7 +61,7 @@ type PaginatedProducts {
 
 type Query {
 	product(productId: String!): Product
-	products(from: Int!, to: Int!): PaginatedProducts
+	products(from: Int!, to: Int!, search: String): PaginatedProducts
 }
 
 type Mutation {
