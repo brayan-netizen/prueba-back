@@ -1,7 +1,16 @@
 require('dotenv').config();
 const axios = require('axios');
 
-const products = async (_, { from: OFrom = 1, to: Oto = 10, search = '' }) => {
+const permission = require('../../utils/permission');
+const checkPermission = require('../../utils/checkPermission');
+
+const products = async (
+	_,
+	{ from: OFrom = 1, to: Oto = 10, search = '' },
+	{ user }
+) => {
+	checkPermission(user, permission.readProduct);
+
 	const from = OFrom === 0 ? OFrom : OFrom - 1;
 	const to = OFrom === 0 ? Oto : Oto - 1;
 
@@ -41,4 +50,17 @@ const products = async (_, { from: OFrom = 1, to: Oto = 10, search = '' }) => {
 	};
 };
 
-module.exports = products;
+const product = async (_, { productId }, { user }) => {
+	checkPermission(user, permission.readProduct);
+
+	const response = await axios.get(
+		`${process.env.DOMAIN_VTEX}/api/catalog_system/pub/products/search/?fq=productId:${productId}`
+	);
+
+	return response.data?.[0];
+};
+
+module.exports = {
+	product,
+	products
+};

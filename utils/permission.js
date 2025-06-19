@@ -1,4 +1,7 @@
 const permission = {
+	//products
+	readProduct: 'read:product',
+
 	//user
 	readUsers: 'read:users',
 

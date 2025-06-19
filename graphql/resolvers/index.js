@@ -1,6 +1,5 @@
 const login = require('./login');
-const products = require('./products');
-const product = require('./product');
+const { product, products } = require('./products');
 
 const { users, user, registerUser, updateUser, deleteUser } = require('./user');
 
